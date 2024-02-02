@@ -23,7 +23,7 @@ This template repository can be used to seed new git repositories in the gardene
 - set the repository description in the "About" section of your repository
 - describe the new component in additional sections in this `README.md`
 - any contributions to the new repository must follow the rules in the 
-  [contributor guide](https://github.com/gardener/documentation/blob/master/CONTRIBUTING.md)
+  [contributor guide](https://gardener.cloud/docs/contribute/)
 - remove this section from this `README.md`
 - ask [@msohn](https://github.com/orgs/gardener/people/msohn) or another
   [owner of the gardener github organisation](https://github.com/orgs/gardener/people?query=role%3Aowner)
