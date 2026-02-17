@@ -9,8 +9,9 @@ This template repository can be used to seed new git repositories in the gardene
 - [Create the new repository](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template)
   based on this template repository
 - Replacing placeholders:
-  - In file `.reuse/dep5` replace placeholder `<repo name>` with the name of your new repository.
+  - In file `REUSE.toml` replace placeholder `<repo name>` with the name of your new repository.
   - In file `CODEOWNERS` replace `<repo name>` and `<maintainer team>`. Use the name of the github team in [gardener teams](https://github.com/orgs/gardener/teams) defining maintainers of the new repository.
+  - In files `OWNERS` and `OWNERS_ALIASES` replace `<repo name>`. Assign the appropriate reviewers and approvers.
 - Set the repository description in the "About" section of your repository
 - Describe the new component in additional sections in this `README.md`
 - Ask the [Owner of the gardener github organisation](https://github.com/orgs/gardener/people?query=role%3Aowner)
@@ -25,10 +26,9 @@ By default all source code files are under `Apache 2.0` and all markdown files a
 
 When creating new source code files the license and copyright information should be provided using corresponding SPDX headers.
 
-Example for go source code files (replace `<year>` with the current year)
 ```
 /*
- * SPDX-FileCopyrightText: <year> SAP SE or an SAP affiliate company and Gardener contributors
+ * SPDX-FileCopyrightText: SAP SE or an SAP affiliate company and Gardener contributors
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -38,55 +38,53 @@ Example for go source code files (replace `<year>` with the current year)
 
 If you copy third-party code into this repository or fork a repository, you must keep the license and copyright information (usually defined in the header of the file).
 
-In addition you should adapt the `.reuse/dep5` file and assign the correct copyright and license information.
+In addition you should adapt the `REUSE.toml` file and assign the correct copyright and license information.
 
-**Example `dep5` file if you copy source code into your repository:**
+**Example `REUSE.toml` file if you copy source code into your repository:**
+```toml
+version = 1
+SPDX-PackageName = "Gardener <repo name>"
+SPDX-PackageSupplier = "The Gardener project <gardener@googlegroups.com>"
+SPDX-PackageDownloadLocation = "https://github.com/gardener/<repo name>"
+
+[[annotations]]
+path = ["*"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "SAP SE or an SAP affiliate company and Gardener contributors"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "**.md"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "SAP SE or an SAP affiliate company and Gardener contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# third-party - copied source code
+[[annotations]]
+path = "pkg/utils/validation/kubernetes/core/*"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2014 The Kubernetes Authors."
+SPDX-License-Identifier = "Apache-2.0"
 ```
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Gardener <repo name>
-Upstream-Contact: The Gardener project <gardener@googlegroups.com>
-Source: https://github.com/gardener/<repo name>
+**Example `REUSE.toml` file if you have forked a repository:**
+```toml
+version = 1
+SPDX-PackageName = "Gardener fork of kubernetes/autoscaler"
+SPDX-PackageSupplier = "The Gardener project <gardener@googlegroups.com>"
+SPDX-PackageDownloadLocation = "https://github.com/gardener/autoscaler"
+# Comment: This is a fork of kubernetes/autoscaler (https://github.com/kubernetes/autoscaler)
 
-# --------------------------------------------------
-# source code
+[[annotations]]
+path = ["*"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2016-2018 The Kubernetes Authors."
+SPDX-License-Identifier = "Apache-2.0"
 
-Files: *
-Copyright: 2017-2024 SAP SE or an SAP affiliate company and Gardener contributors
-License: Apache-2.0
-
-# --------------------------------------------------
-# documentation
-
-Files: *.md
-Copyright: 2017-2024 SAP SE or an SAP affiliate company and Gardener contributors
-License: CC-BY-4.0
-
-# --------------------------------------------------
-# third-party
-
-# --- copied source code ---
-Files: pkg/utils/validation/kubernetes/core/*
-Copyright: 2014 The Kubernetes Authors.
-License: Apache-2.0
-```
-**Example `dep5` file if you have forked a repository:**
-```
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Gardener fork of kubernetes/autoscaler
-Upstream-Contact: The Gardener project <gardener@googlegroups.com>
-Source: https://github.com/gardener/autoscaler
-Comment: This is a fork of kubernetes/autoscaler (https://github.com/kubernetes/autoscaler)
-
-# --------------------------------------------------
-# source code
-
-Files: *
-Copyright: 2016-2018 The Kubernetes Authors.
-License: Apache-2.0
-
-Files: .ci/*
-Copyright: 2024 SAP SE or an SAP affiliate company and Gardener contributors
-License: Apache-2.0
+[[annotations]]
+path = ".ci/*"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "SAP SE or an SAP affiliate company and Gardener contributors"
+SPDX-License-Identifier = "Apache-2.0"
 ```
 
 #### Modifications
